@@ -21,4 +21,7 @@ struct map{
 static struct block now_arrange[9];
 static char blank_location;
 static char remain_turns;
+static int WIDTH = 487;
+static int TURNS_BAR_HEIGHT = 70;
+static int MSG_BAR_HEIGHT = 70;
 

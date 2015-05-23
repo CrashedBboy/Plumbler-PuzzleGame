@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <cairo.h>
 #include <gtk/gtk.h>
 #include "property.c"
 #include "interface.c"
@@ -7,7 +8,10 @@
 #include "event.c"
 #include "animation.c"
 
-int main(int argc, char const *argv[]){
+int main(int argc, char *argv[]){
 	printf("Hello Power Engineer!\n");
+	gtk_init(&argc, &argv);
+	layout_init();
+	gtk_main();
 	return 0;
 }
