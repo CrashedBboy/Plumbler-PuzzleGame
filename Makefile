@@ -6,7 +6,7 @@ ENTRY=src/main.c
 clear
 
 if [ -f $ENTRY ] ; then
-	$CC $ENTRY $CFLAGS -o PowerEngineer.exe
+	$CC $ENTRY $CFLAGS -o Power\ Engineer
 else
 	echo "====================="
 	echo "File main.c Not Found"
