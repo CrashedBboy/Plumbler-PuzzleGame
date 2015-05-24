@@ -37,8 +37,9 @@ gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data){
 	do_drawing(cr);
 	return FALSE;
 }
-
+//It's also fucking looooooooong
 void do_drawing(cairo_t *cr){
+	//Background color
 	cairo_set_source_rgb(cr, 1, 1, 1);
 	cairo_rectangle(cr, 0, 0,
 			3*BLOCK_SIZE + 2*TERMINATOR_SIZE + 2*MARGIN, 
@@ -46,6 +47,7 @@ void do_drawing(cairo_t *cr){
 	cairo_stroke_preserve(cr);
 	cairo_fill(cr);
 
+	//Game map margin
 	cairo_set_source_rgb(cr, 0.9, 0.9, 0.9);
 	cairo_rectangle(cr, TERMINATOR_SIZE, TURNS_BAR_HEIGHT+TERMINATOR_SIZE, 
 					3*BLOCK_SIZE + 2*MARGIN, 
@@ -53,6 +55,52 @@ void do_drawing(cairo_t *cr){
 	cairo_stroke_preserve(cr);
 	cairo_fill(cr);
 
+	//game map block's background
+	cairo_set_source_rgb(cr, 0.4, 0.4, 0.4);
+	cairo_rectangle(cr, TERMINATOR_SIZE+MARGIN, TURNS_BAR_HEIGHT+TERMINATOR_SIZE+MARGIN, 
+					3*BLOCK_SIZE, 
+					3*BLOCK_SIZE);
+	cairo_stroke_preserve(cr);
+	cairo_fill(cr);
+
+	//blank block
+	cairo_set_source_rgb(cr, 0.9, 0.9, 0.9);
+	cairo_rectangle(cr,
+		TERMINATOR_SIZE + MARGIN + (blank_location%3)*BLOCK_SIZE, 
+		TURNS_BAR_HEIGHT+TERMINATOR_SIZE+MARGIN+(blank_location/3)*BLOCK_SIZE, 
+		BLOCK_SIZE, 
+		BLOCK_SIZE);
+	cairo_stroke_preserve(cr);
+	cairo_fill(cr);
+
+	int i;
+	cairo_set_line_width(cr, CABLE_WIDTH);
+	for (i = 0; i < 9; ++i){
+		int x_center = (i%3 + 0.5)*BLOCK_SIZE + TERMINATOR_SIZE + MARGIN;
+		int y_center = (i/3 + 0.5)*BLOCK_SIZE + TERMINATOR_SIZE + TURNS_BAR_HEIGHT + MARGIN;
+		cairo_move_to(cr, x_center, y_center);
+		if(i != blank_location){
+			if(maps[current_level].blocks[i].top){
+				cairo_line_to(cr, x_center, y_center - 0.5*BLOCK_SIZE);
+				cairo_move_to(cr, x_center, y_center);
+			}
+			if(maps[current_level].blocks[i].right){
+				cairo_line_to(cr, x_center + 0.5 * BLOCK_SIZE, y_center);
+				cairo_move_to(cr, x_center, y_center);
+			}
+			if(maps[current_level].blocks[i].bottom){
+				cairo_line_to(cr, x_center, y_center + 0.5*BLOCK_SIZE);
+				cairo_move_to(cr, x_center, y_center);
+			}
+			if(maps[current_level].blocks[i].left){
+				cairo_line_to(cr, x_center - 0.5 * BLOCK_SIZE, y_center);
+			}
+		}
+	}
+	cairo_stroke_preserve(cr);
+
+
+	//Game text info
 	cairo_set_source_rgb(cr, 0.4, 0.4, 0.4);
 	cairo_set_font_size(cr,25);
 	cairo_move_to(cr, 30, 50);
@@ -64,7 +112,6 @@ void do_drawing(cairo_t *cr){
 	cairo_move_to(cr, 90, 540);
 	cairo_show_text(cr, "TIPS: Use the arrow keys");
 	cairo_stroke_preserve(cr);
-
 	cairo_set_source_rgb(cr, 0.4, 0.9, 0.4);
 	cairo_set_font_size(cr,25);
 	cairo_move_to(cr, 220, 50);
