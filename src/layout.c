@@ -15,6 +15,7 @@ void layout_init(){
 	gtk_window_set_icon(GTK_WINDOW(window), create_pixbuf("img/window_icon.png"));
 	gtk_window_set_has_resize_grip(GTK_WINDOW(window), FALSE);
 	g_signal_connect(G_OBJECT(window), "delete_event",gtk_main_quit, NULL);
+	g_signal_connect (G_OBJECT (window), "key_press_event", G_CALLBACK (on_key_press), NULL);
 
 	draw_area = gtk_drawing_area_new();
 	gtk_container_add(GTK_CONTAINER(window), draw_area);
@@ -106,19 +107,19 @@ void do_drawing(cairo_t *cr){
 		int x_center = (i%3 + 0.5)*BLOCK_SIZE + TERMINATOR_SIZE + MARGIN;
 		int y_center = (i/3 + 0.5)*BLOCK_SIZE + TERMINATOR_SIZE + TURNS_BAR_HEIGHT + MARGIN;
 		if(i != blank_location){
-			if(maps[current_level].blocks[i].top){
+			if(maps[current_level].blocks[i].dimension[0]){
 				cairo_move_to(cr, x_center, y_center+0.5*CABLE_WIDTH);
 				cairo_line_to(cr, x_center, y_center - 0.5*BLOCK_SIZE);
 			}
-			if(maps[current_level].blocks[i].right){
+			if(maps[current_level].blocks[i].dimension[1]){
 				cairo_move_to(cr, x_center - 0.5*CABLE_WIDTH, y_center);
 				cairo_line_to(cr, x_center + 0.5 * BLOCK_SIZE, y_center);
 			}
-			if(maps[current_level].blocks[i].bottom){
+			if(maps[current_level].blocks[i].dimension[2]){
 				cairo_move_to(cr, x_center, y_center - 0.5*CABLE_WIDTH);
 				cairo_line_to(cr, x_center, y_center + 0.5*BLOCK_SIZE);
 			}
-			if(maps[current_level].blocks[i].left){
+			if(maps[current_level].blocks[i].dimension[3]){
 				cairo_move_to(cr, x_center+ 0.5*CABLE_WIDTH, y_center);
 				cairo_line_to(cr, x_center - 0.5 * BLOCK_SIZE, y_center);
 			}

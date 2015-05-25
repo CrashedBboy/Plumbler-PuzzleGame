@@ -10,3 +10,6 @@ void do_drawing(cairo_t*);
 void set_terminator(cairo_t*, char, char);
 
 void set_map_level(int);
+
+gboolean on_key_press(GtkWidget*, GdkEventKey*, gpointer);
+void block_value_copy(int, int);

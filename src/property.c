@@ -4,10 +4,7 @@ Description	:game parameter and constant
 Date		:2015/5/22
 ***************************************/
 struct block{
-	char top;
-	char right;
-	char bottom;
-	char left;
+	char dimension[4];
 };
 struct map{
 	struct block blocks[9];
