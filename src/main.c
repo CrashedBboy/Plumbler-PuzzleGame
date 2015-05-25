@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cairo.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 #include "property.c"
 #include "interface.c"
 #include "control.c"

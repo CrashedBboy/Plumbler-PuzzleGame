@@ -13,3 +13,7 @@ void set_map_level(int);
 
 gboolean on_key_press(GtkWidget*, GdkEventKey*, gpointer);
 void block_value_copy(int, int);
+
+
+gboolean refresh_map(int);
+gboolean block_mask();

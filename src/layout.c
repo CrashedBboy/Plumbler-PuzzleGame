@@ -15,13 +15,16 @@ void layout_init(){
 	gtk_window_set_icon(GTK_WINDOW(window), create_pixbuf("img/window_icon.png"));
 	gtk_window_set_has_resize_grip(GTK_WINDOW(window), FALSE);
 	g_signal_connect(G_OBJECT(window), "delete_event",gtk_main_quit, NULL);
-	g_signal_connect (G_OBJECT (window), "key_press_event", G_CALLBACK (on_key_press), NULL);
+	g_signal_connect (G_OBJECT (window), "key-press-event", G_CALLBACK (on_key_press), NULL);
 
 	draw_area = gtk_drawing_area_new();
 	gtk_container_add(GTK_CONTAINER(window), draw_area);
 	g_signal_connect(G_OBJECT(draw_area), "draw", G_CALLBACK(on_draw_event), NULL);
+	//g_signal_connect(G_OBJECT(draw_area), "expose-event",G_CALLBACK(on_draw_event), NULL);
 
 	gtk_widget_show_all(window);
+
+	//g_timeout_add(100, (GSourceFunc) time_handler,NULL);
 }
 GdkPixbuf *create_pixbuf(const gchar *filename){
    GdkPixbuf *pixbuf;
@@ -35,6 +38,7 @@ GdkPixbuf *create_pixbuf(const gchar *filename){
 }
 
 gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data){
+	printf("Drawing\n");
 	do_drawing(cr);
 	return FALSE;
 }
@@ -126,6 +130,16 @@ void do_drawing(cairo_t *cr){
 		}
 	}
 	cairo_stroke_preserve(cr);
+
+	//mask of block
+	if(mask){
+		cairo_set_line_width(cr, 0);
+		cairo_rectangle(cr, mask_x, mask_y, mask_width, BLOCK_SIZE);
+		cairo_stroke_preserve(cr);
+
+		cairo_set_source_rgb(cr, 0.95, 0.95, 0.95);
+		cairo_fill(cr);
+	}
 }
 
 void set_terminator(cairo_t *cr, char direction, char block){
