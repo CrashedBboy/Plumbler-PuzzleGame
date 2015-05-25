@@ -48,7 +48,7 @@ void do_drawing(cairo_t *cr){
 	cairo_fill(cr);
 
 	//Game map margin
-	cairo_set_source_rgb(cr, 0.9, 0.9, 0.9);
+	cairo_set_source_rgb(cr, 0.95, 0.95, 0.95);
 	cairo_rectangle(cr, TERMINATOR_SIZE, TURNS_BAR_HEIGHT+TERMINATOR_SIZE, 
 					3*BLOCK_SIZE + 2*MARGIN, 
 					3*BLOCK_SIZE + 2*MARGIN);
@@ -56,7 +56,7 @@ void do_drawing(cairo_t *cr){
 	cairo_fill(cr);
 
 	//game map block's background
-	cairo_set_source_rgb(cr, 0.4, 0.4, 0.4);
+	cairo_set_source_rgb(cr, 0.9, 0.9, 0.9);
 	cairo_rectangle(cr, TERMINATOR_SIZE+MARGIN, TURNS_BAR_HEIGHT+TERMINATOR_SIZE+MARGIN, 
 					3*BLOCK_SIZE, 
 					3*BLOCK_SIZE);
@@ -64,7 +64,7 @@ void do_drawing(cairo_t *cr){
 	cairo_fill(cr);
 
 	//blank block
-	cairo_set_source_rgb(cr, 0.9, 0.9, 0.9);
+	cairo_set_source_rgb(cr, 0.95, 0.95, 0.95);
 	cairo_rectangle(cr,
 		TERMINATOR_SIZE + MARGIN + (blank_location%3)*BLOCK_SIZE, 
 		TURNS_BAR_HEIGHT+TERMINATOR_SIZE+MARGIN+(blank_location/3)*BLOCK_SIZE, 
@@ -72,33 +72,6 @@ void do_drawing(cairo_t *cr){
 		BLOCK_SIZE);
 	cairo_stroke_preserve(cr);
 	cairo_fill(cr);
-
-	int i;
-	cairo_set_line_width(cr, CABLE_WIDTH);
-	for (i = 0; i < 9; ++i){
-		int x_center = (i%3 + 0.5)*BLOCK_SIZE + TERMINATOR_SIZE + MARGIN;
-		int y_center = (i/3 + 0.5)*BLOCK_SIZE + TERMINATOR_SIZE + TURNS_BAR_HEIGHT + MARGIN;
-		cairo_move_to(cr, x_center, y_center);
-		if(i != blank_location){
-			if(maps[current_level].blocks[i].top){
-				cairo_line_to(cr, x_center, y_center - 0.5*BLOCK_SIZE);
-				cairo_move_to(cr, x_center, y_center);
-			}
-			if(maps[current_level].blocks[i].right){
-				cairo_line_to(cr, x_center + 0.5 * BLOCK_SIZE, y_center);
-				cairo_move_to(cr, x_center, y_center);
-			}
-			if(maps[current_level].blocks[i].bottom){
-				cairo_line_to(cr, x_center, y_center + 0.5*BLOCK_SIZE);
-				cairo_move_to(cr, x_center, y_center);
-			}
-			if(maps[current_level].blocks[i].left){
-				cairo_line_to(cr, x_center - 0.5 * BLOCK_SIZE, y_center);
-			}
-		}
-	}
-	cairo_stroke_preserve(cr);
-
 
 	//Game text info
 	cairo_set_source_rgb(cr, 0.4, 0.4, 0.4);
@@ -122,9 +95,72 @@ void do_drawing(cairo_t *cr){
 	cairo_show_text(cr, level_str);
 	cairo_stroke_preserve(cr);
 
-	//cairo_set_source_rgb(cr, 0.8, 0.8, 0.8);
-	//cairo_set_line_width(cr, 5);
-	//cairo_move_to(cr, 0, 0);
-	//cairo_line_to(cr, 200, 100);
-	//cairo_stroke_preserve(cr);
+	//Set start point and end point  
+	set_terminator(cr, maps[current_level].entry_direction, maps[current_level].entry_block);
+	set_terminator(cr, maps[current_level].exit_direction, maps[current_level].exit_block);
+
+	int i;
+	cairo_set_source_rgb(cr, 0.7, 0.7, 0.7);
+	cairo_set_line_width(cr, CABLE_WIDTH);
+	for (i = 0; i < 9; i++){
+		int x_center = (i%3 + 0.5)*BLOCK_SIZE + TERMINATOR_SIZE + MARGIN;
+		int y_center = (i/3 + 0.5)*BLOCK_SIZE + TERMINATOR_SIZE + TURNS_BAR_HEIGHT + MARGIN;
+		if(i != blank_location){
+			if(maps[current_level].blocks[i].top){
+				cairo_move_to(cr, x_center, y_center+0.5*CABLE_WIDTH);
+				cairo_line_to(cr, x_center, y_center - 0.5*BLOCK_SIZE);
+			}
+			if(maps[current_level].blocks[i].right){
+				cairo_move_to(cr, x_center - 0.5*CABLE_WIDTH, y_center);
+				cairo_line_to(cr, x_center + 0.5 * BLOCK_SIZE, y_center);
+			}
+			if(maps[current_level].blocks[i].bottom){
+				cairo_move_to(cr, x_center, y_center - 0.5*CABLE_WIDTH);
+				cairo_line_to(cr, x_center, y_center + 0.5*BLOCK_SIZE);
+			}
+			if(maps[current_level].blocks[i].left){
+				cairo_move_to(cr, x_center+ 0.5*CABLE_WIDTH, y_center);
+				cairo_line_to(cr, x_center - 0.5 * BLOCK_SIZE, y_center);
+			}
+		}
+	}
+	cairo_stroke_preserve(cr);
+}
+
+void set_terminator(cairo_t *cr, char direction, char block){
+	int x_base = TERMINATOR_SIZE + MARGIN;
+	int y_base = TERMINATOR_SIZE + TURNS_BAR_HEIGHT + MARGIN;
+	cairo_set_source_rgb(cr, 0.3, 0.9, 0.3);
+	switch (direction){
+		case 0:
+			cairo_rectangle(cr, 
+				x_base + (block%3 + 0.5)*BLOCK_SIZE - 0.5*TERMINATOR_SIZE, 
+				y_base-TERMINATOR_SIZE,
+				TERMINATOR_SIZE,
+				TERMINATOR_SIZE);	
+			break;
+		case 1:
+			cairo_rectangle(cr, 
+				x_base + 3*BLOCK_SIZE, 
+				y_base + (block/3+0.5)*BLOCK_SIZE - 0.5*TERMINATOR_SIZE,
+				TERMINATOR_SIZE,
+				TERMINATOR_SIZE);
+			break;
+		case 2:
+			cairo_rectangle(cr, 
+				x_base + (block%3 + 0.5)*BLOCK_SIZE - 0.5*TERMINATOR_SIZE, 
+				y_base + 3*BLOCK_SIZE,
+				TERMINATOR_SIZE,
+				TERMINATOR_SIZE);
+			break;
+		case 3:
+			cairo_rectangle(cr, 
+				x_base - TERMINATOR_SIZE, 
+				y_base + (block/3+0.5)*BLOCK_SIZE - 0.5*TERMINATOR_SIZE,
+				TERMINATOR_SIZE,
+				TERMINATOR_SIZE);
+			break;
+	}
+	cairo_stroke_preserve(cr);
+	cairo_fill(cr);
 }
