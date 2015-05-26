@@ -8,8 +8,10 @@ struct block{
 };
 struct map{
 	struct block blocks[9];
+	struct block answer[9];
 	int total_turns;
 	int default_blank_location;
+	int answer_blank_location;
 	int entry_block;
 	int entry_direction;
 	int exit_block;

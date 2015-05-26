@@ -1,4 +1,5 @@
 [Maps format]
+================================================
 total_level
 total_turns
 default_blank_location
@@ -14,3 +15,13 @@ _ _ _ _
 _ _ _ _
 _ _ _ _
 _ _ _ _
+answer_blank_location
+X X X X
+X X X X
+X X X X
+X X X X
+X X X X
+X X X X
+X X X X
+X X X X
+=================================================

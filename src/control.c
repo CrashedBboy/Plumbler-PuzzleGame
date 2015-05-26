@@ -25,11 +25,19 @@ void game_init(){
 					&maps[i].blocks[j].dimension[2],
 					&maps[i].blocks[j].dimension[3]);
 		}
+		fscanf(map_info, "%d\n", &maps[i].answer_blank_location);
+		for (j = 0; j < 9; j++){
+			if (j != maps[i].answer_blank_location)
+				fscanf(map_info, "%d %d %d %d\n", 
+					&maps[i].answer[j].dimension[0],
+					&maps[i].answer[j].dimension[1],
+					&maps[i].answer[j].dimension[2],
+					&maps[i].answer[j].dimension[3]);
+		}
 	}
 	set_map_level(current_level);
 }
 
-/*Is there a simple way? It's fuckig looooooooooooong*/
 void set_map_level(int level){
 		remain_turns = maps[level].total_turns;
 		blank_location = maps[level].default_blank_location;
@@ -38,5 +46,16 @@ void set_map_level(int level){
 }
 
 void game_judge(){
-
+	if (maps[current_level].answer_blank_location != blank_location)
+		return;
+	int i, j;
+	for (i = 0; i < 9; i++){
+		if (i != maps[current_level].answer_blank_location){
+			for (j = 0; j < 4; j++){;
+				if (maps[current_level].blocks[i].dimension[j] != maps[current_level].answer[i].dimension[j])
+					return;
+			}
+		}
+	}
+	current_level_done = TRUE;
 }
