@@ -48,8 +48,15 @@ void set_map_level(int level){
 		maps[level].entry_direction = 3;
 		maps[level].exit_block = 5;
 		maps[level].exit_direction = 1;
-
 		remain_turns = 1;
 		blank_location = 4;
 	}
+}
+
+void game_judge(){
+	trace_path(entry_direction, entry_block);
+}
+
+void trace_path(int entry, int block){
+
 }

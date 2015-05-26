@@ -22,6 +22,7 @@ static int current_level = 0;
 static char remain_str[5];
 static char level_str[5];
 static gboolean mask = FALSE;
+static gboolean current_level_done = FALSE;
 static int mask_x;
 static int mask_y;
 static int mask_width;

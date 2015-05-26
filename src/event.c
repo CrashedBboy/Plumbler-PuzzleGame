@@ -48,7 +48,8 @@ gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer user_data
     		printf("default!!\n");
     		break;
     }
-    
+    if (remain_turns <= 0)
+    	game_judge();
 	return FALSE; 
 }
 
