@@ -142,7 +142,7 @@ void do_drawing(cairo_t *cr){
 	}
 }
 
-void set_terminator(cairo_t *cr, char direction, char block){
+void set_terminator(cairo_t *cr, int direction, int block){
 	int x_base = TERMINATOR_SIZE + MARGIN;
 	int y_base = TERMINATOR_SIZE + TURNS_BAR_HEIGHT + MARGIN;
 	cairo_set_source_rgb(cr, 0.3, 0.9, 0.3);

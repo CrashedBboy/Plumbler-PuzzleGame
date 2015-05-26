@@ -4,59 +4,39 @@ Description	:COntrol the whole game's flow
 Date		:2015/5/22
 *****************************************/
 void game_init(){
+	FILE *map_info;
+	int total_levels;
+	map_info= fopen("map.info", "r");
+	fscanf(map_info, "%d\n",&total_levels);
+	int i;
+	for(i = 0; i < total_levels; i++){
+		fscanf(map_info, "%d\n", &maps[i].total_turns);
+		fscanf(map_info, "%d\n", &maps[i].default_blank_location);
+		fscanf(map_info, "%d\n", &maps[i].entry_block);
+		fscanf(map_info, "%d\n", &maps[i].entry_direction);
+		fscanf(map_info, "%d\n", &maps[i].exit_block);
+		fscanf(map_info, "%d\n", &maps[i].exit_direction);
+		int j;
+		for (j = 0; j < 9; j++){
+			if (j != maps[i].default_blank_location)
+				fscanf(map_info, "%d %d %d %d\n", 
+					&maps[i].blocks[j].dimension[0],
+					&maps[i].blocks[j].dimension[1],
+					&maps[i].blocks[j].dimension[2],
+					&maps[i].blocks[j].dimension[3]);
+		}
+	}
 	set_map_level(current_level);
 }
 
 /*Is there a simple way? It's fuckig looooooooooooong*/
 void set_map_level(int level){
-	if (level == 0){
-		maps[level].blocks[0].dimension[0] = 1;
-		maps[level].blocks[0].dimension[1] = 0;
-		maps[level].blocks[0].dimension[2] = 0;
-		maps[level].blocks[0].dimension[3] = 1;
-		maps[level].blocks[1].dimension[0] = 1;
-		maps[level].blocks[1].dimension[1] = 0;
-		maps[level].blocks[1].dimension[2] = 1;
-		maps[level].blocks[1].dimension[3] = 0;
-		maps[level].blocks[2].dimension[0] = 1;
-		maps[level].blocks[2].dimension[1] = 1;
-		maps[level].blocks[2].dimension[2] = 0;
-		maps[level].blocks[2].dimension[3] = 0;
-		maps[level].blocks[3].dimension[0] = 0;
-		maps[level].blocks[3].dimension[1] = 1;
-		maps[level].blocks[3].dimension[2] = 0;
-		maps[level].blocks[3].dimension[3] = 1;
-		maps[level].default_blank_location = 4;
-		maps[level].blocks[5].dimension[0] = 0;
-		maps[level].blocks[5].dimension[1] = 1;
-		maps[level].blocks[5].dimension[2] = 0;
-		maps[level].blocks[5].dimension[3] = 1;
-		maps[level].blocks[6].dimension[0] = 0;
-		maps[level].blocks[6].dimension[1] = 0;
-		maps[level].blocks[6].dimension[2] = 1;
-		maps[level].blocks[6].dimension[3] = 1;
-		maps[level].blocks[7].dimension[0] = 0;
-		maps[level].blocks[7].dimension[1] = 1;
-		maps[level].blocks[7].dimension[2] = 0;
-		maps[level].blocks[7].dimension[3] = 1;
-		maps[level].blocks[8].dimension[0] = 0;
-		maps[level].blocks[8].dimension[1] = 1;
-		maps[level].blocks[8].dimension[2] = 1;
-		maps[level].blocks[8].dimension[3] = 0;
-		maps[level].total_turns = 1;
-		maps[level].entry_block = 3;
-		maps[level].entry_direction = 3;
-		maps[level].exit_block = 5;
-		maps[level].exit_direction = 1;
-		remain_turns = 1;
-		blank_location = 4;
-	}
+		remain_turns = maps[level].total_turns;
+		blank_location = maps[level].default_blank_location;
+		mask = FALSE;
+		current_level_done = FALSE;
 }
 
 void game_judge(){
-	trace_path(entry_direction, entry_block);
-}
-
-void trace_path(int entry, int block){
 
 }

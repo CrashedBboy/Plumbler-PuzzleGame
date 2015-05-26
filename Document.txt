@@ -1,0 +1,16 @@
+[Maps format]
+total_level
+total_turns
+default_blank_location
+entry_block
+entry_direction
+exit_block
+exit_direction
+_ _ _ _
+_ _ _ _
+_ _ _ _
+_ _ _ _
+_ _ _ _
+_ _ _ _
+_ _ _ _
+_ _ _ _

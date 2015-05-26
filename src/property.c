@@ -4,19 +4,19 @@ Description	:game parameter and constant
 Date		:2015/5/22
 ***************************************/
 struct block{
-	char dimension[4];
+	int dimension[4];
 };
 struct map{
 	struct block blocks[9];
-	char total_turns;
-	char default_blank_location;
-	char entry_block;
-	char entry_direction;
-	char exit_block;
-	char exit_direction;
+	int total_turns;
+	int default_blank_location;
+	int entry_block;
+	int entry_direction;
+	int exit_block;
+	int exit_direction;
 };
-static struct map maps[2];
-static char blank_location;
+static struct map maps[1];
+static int blank_location;
 static int remain_turns;
 static int current_level = 0;
 static char remain_str[5];

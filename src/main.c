@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <cairo.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
