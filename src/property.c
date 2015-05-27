@@ -30,7 +30,8 @@ static int mask_y;
 static int mask_width;
 
 static int MARGIN = 12;
-static int TERMINATOR_SIZE = 30;
+static int TERMINATOR_SIZE = 36;
+static int TERMINATOR2_SIZE = 20;
 static int BLOCK_SIZE = 120;
 static int CABLE_WIDTH = 20;
 static int TURNS_BAR_HEIGHT = 70;
