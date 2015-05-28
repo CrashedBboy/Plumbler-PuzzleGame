@@ -11,10 +11,11 @@ void set_terminator(cairo_t*, int, int);
 
 void set_map_level(int);
 void game_judge();
+void next_level();
 
 gboolean on_key_press(GtkWidget*, GdkEventKey*, gpointer);
 void block_value_copy(int, int);
 
 
-gboolean refresh_map(int);
+gboolean slide_block(int);
 gboolean block_mask();

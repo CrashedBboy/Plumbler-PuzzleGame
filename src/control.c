@@ -59,3 +59,9 @@ void game_judge(){
 	}
 	current_level_done = TRUE;
 }
+
+void next_level(){
+	current_level += 1;
+	set_map_level(current_level);
+	gtk_widget_queue_draw(window);
+}

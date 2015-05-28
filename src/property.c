@@ -17,7 +17,9 @@ struct map{
 	int exit_block;
 	int exit_direction;
 };
-static struct map maps[1];
+GtkWidget *window;
+GtkWidget *draw_area;
+static struct map maps[5];
 static int blank_location;
 static int remain_turns;
 static int current_level = 0;

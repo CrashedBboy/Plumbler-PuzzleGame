@@ -4,44 +4,48 @@ Description	:callback functions for each event
 Date		:2015/5/22
 **********************************************/
 gboolean on_key_press (GtkWidget *widget, GdkEventKey *event, gpointer user_data){
-	printf("Click!!\n");
-	if (remain_turns == 0)
-		return FALSE;
+	printf("%d\n", event->keyval);
 	switch (event->keyval){
     	case GDK_KEY_Up:
     		printf("UP!!\n");
-    		if (blank_location > 2) {
+    		if (blank_location > 2 && !current_level_done) {
     			block_value_copy(blank_location-3, blank_location);
     			blank_location -= 3;
     			remain_turns -= 1;
-    			refresh_map(blank_location+3);
+    			slide_block(blank_location+3);
     		}
     		break;
     	case GDK_KEY_Right:
     		printf("Right!!\n");
-    		if (blank_location%3 < 2) {
+    		if (blank_location%3 < 2 && !current_level_done) {
     			block_value_copy(blank_location+1, blank_location);
     			blank_location += 1;
     			remain_turns -= 1;
-    			refresh_map(blank_location-1);
+    			slide_block(blank_location-1);
     		}
     		break;
     	case GDK_KEY_Down:
     		printf("Down!!\n");
-    		if (blank_location < 6) {
+    		if (blank_location < 6 && !current_level_done) {
     			block_value_copy(blank_location+3, blank_location);
     			blank_location += 3;
     			remain_turns -= 1;
-    			refresh_map(blank_location-3);
+    			slide_block(blank_location-3);
     		}
     		break;
     	case GDK_KEY_Left:
     		printf("Left!!");
-    		if (blank_location%3 > 0) {
+    		if (blank_location%3 > 0 && !current_level_done) {
     			block_value_copy(blank_location-1, blank_location);
     			blank_location -= 1;
     			remain_turns -= 1;
-    			refresh_map(blank_location+1);
+    			slide_block(blank_location+1);
+    		}
+    		break;
+    	case GDK_KEY_space:
+    		printf("space!!\n");
+    		if (current_level_done){
+    			next_level();
     		}
     		break;
     	default:
@@ -60,7 +64,7 @@ void block_value_copy(int source, int destination){
 	}
 }
 
-gboolean refresh_map(int source){
+gboolean slide_block(int source){
   gtk_widget_queue_draw(window);
   mask = TRUE;
   mask_width = BLOCK_SIZE;

@@ -3,8 +3,7 @@ File		:layout.c
 Description	:arrange each static widget
 Date		:2015/5/22
 ***************************************/
-GtkWidget *window;
-GtkWidget *draw_area;
+
 void layout_init(){
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), "Power Engineer");
