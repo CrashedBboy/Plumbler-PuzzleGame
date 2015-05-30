@@ -11,7 +11,6 @@
 #include "animation.c"
 
 int main(int argc, char *argv[]){
-	printf("Hello Power Engineer!\n");
 	gtk_init(&argc, &argv);
 	game_init();
 	layout_init();

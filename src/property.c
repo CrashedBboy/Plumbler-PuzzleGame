@@ -38,4 +38,3 @@ static int BLOCK_SIZE = 120;
 static int CABLE_WIDTH = 20;
 static int TURNS_BAR_HEIGHT = 70;
 static int MSG_BAR_HEIGHT = 70;
-

@@ -19,11 +19,8 @@ void layout_init(){
 	draw_area = gtk_drawing_area_new();
 	gtk_container_add(GTK_CONTAINER(window), draw_area);
 	g_signal_connect(G_OBJECT(draw_area), "draw", G_CALLBACK(on_draw_event), NULL);
-	//g_signal_connect(G_OBJECT(draw_area), "expose-event",G_CALLBACK(on_draw_event), NULL);
 
 	gtk_widget_show_all(window);
-
-	//g_timeout_add(100, (GSourceFunc) time_handler,NULL);
 }
 GdkPixbuf *create_pixbuf(const gchar *filename){
    GdkPixbuf *pixbuf;
@@ -37,11 +34,10 @@ GdkPixbuf *create_pixbuf(const gchar *filename){
 }
 
 gboolean on_draw_event(GtkWidget *widget, cairo_t *cr, gpointer user_data){
-	printf("Drawing\n");
 	do_drawing(cr);
 	return FALSE;
 }
-//It's also fucking looooooooong
+
 void do_drawing(cairo_t *cr){
 	//Background color
 	cairo_set_source_rgb(cr, 1, 1, 1);
@@ -88,8 +84,14 @@ void do_drawing(cairo_t *cr){
 	cairo_set_font_size(cr, 20);
 	cairo_move_to(cr, 90, 540);
 	if (current_level_done != TRUE){
-		cairo_show_text(cr, "TIPS: Use the arrow keys");
-		cairo_stroke_preserve(cr);
+		if (remain_turns > 0){
+			cairo_show_text(cr, "TIPS: Use the arrow keys");
+			cairo_stroke_preserve(cr);
+		}else{
+			cairo_set_source_rgb(cr, 0.9, 0.4, 0.4);
+			cairo_show_text(cr, "  Failed! Please try again");
+			cairo_stroke_preserve(cr);
+		}
 	}
 	cairo_set_source_rgb(cr, 0.4, 0.9, 0.4);
 	if (current_level_done == TRUE){

@@ -39,7 +39,6 @@ void game_init(){
 }
 
 void set_map_level(int level){
-		printf("Set map Level:%d\n", level);
 		remain_turns = maps[level].total_turns;
 		blank_location = maps[level].default_blank_location;
 		mask = FALSE;
@@ -62,11 +61,7 @@ void game_judge(){
 }
 
 void next_level(){
-	printf("next_level\n");
 	current_level += 1;
 	set_map_level(current_level);
-	printf("Current Level:%d\n", current_level);
-	printf("Remain Turns:%d\n", maps[current_level].total_turns);
-	printf("blank_location:%d\n", maps[current_level].default_blank_location);
 	gtk_widget_queue_draw(window);
 }
