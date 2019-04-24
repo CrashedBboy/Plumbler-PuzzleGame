@@ -1,6 +1,6 @@
 #!/bin/sh
 CC=gcc
-CFLAGS=`pkg-config --cflags --libs gtk+-3.0`
+CFLAGS=`pkg-config --cflags --libs gtk+-3.0 cairo`
 ENTRY=src/main.c
 
 clear
