@@ -1,7 +1,7 @@
 # Plumbler-PuzzleGame
 A puzzle game similar to plumber .
 
-# Build from C source code
+# Build from C source code developed using C and GTK GUI library.
 
 on Linux Ubuntu:
 
