@@ -1,5 +1,5 @@
 # Plumbler-PuzzleGame
-A puzzle game similar to plumber .
+A plumber puzzle game developed by C and GNU Assembler (GAS) with GTK library.
 
 # Build from C source code developed using C and GTK GUI library.
 
